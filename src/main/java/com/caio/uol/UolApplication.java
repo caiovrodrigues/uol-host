@@ -1,0 +1,14 @@
+package com.caio.uol;
+
+import gg.jte.TemplateOutput;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UolApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(UolApplication.class, args);
+	}
+
+}
