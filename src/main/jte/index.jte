@@ -1,4 +1,5 @@
-@param String name
+@param String user
+@param String listUsers
 
 <!doctype html>
 <html lang="pt-BR">
@@ -10,6 +11,7 @@
     <title>UOL</title>
 </head>
 <body>
-    Hello ${name}!
+    <h2>${user}</h2>
+    <h2>${listUsers}</h2>
 </body>
 </html>
