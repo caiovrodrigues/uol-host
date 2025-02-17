@@ -26,7 +26,6 @@
         <h1>Liga da Justiça</h1>
     @endif
 
-    
     @if(ligaDaJustica != null)
         <ul>
             @for(String codinome : ligaDaJustica.getCodinomes())

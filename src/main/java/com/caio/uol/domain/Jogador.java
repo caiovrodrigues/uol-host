@@ -1,6 +1,7 @@
 package com.caio.uol.domain;
 
-import com.caio.uol.domain.enumeration.Grupo;
+import com.caio.uol.domain.enumeration.Time;
+import com.caio.uol.web.dto.JogadorCreateRequest;
 
 public class Jogador {
 
@@ -8,16 +9,21 @@ public class Jogador {
     private String email;
     private String telefone;
     private String codinome;
-    private Grupo grupo;
+    private Time time;
 
     public Jogador(){}
 
-    public Jogador(String nome, String email, String telefone, String codinome, Grupo grupo) {
+    public Jogador(JogadorCreateRequest jogadorDto){
+        this.nome = jogadorDto.nome();
+
+    }
+
+    public Jogador(String nome, String email, String telefone, String codinome, Time time) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.codinome = codinome;
-        this.grupo = grupo;
+        this.time = time;
     }
 
     public String getNome() {
@@ -52,11 +58,11 @@ public class Jogador {
         this.codinome = codinome;
     }
 
-    public Grupo getGrupo() {
-        return grupo;
+    public Time getTime() {
+        return time;
     }
 
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
+    public void setTime(Time time) {
+        this.time = time;
     }
 }
