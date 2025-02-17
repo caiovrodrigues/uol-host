@@ -1,6 +1,7 @@
 package com.caio.uol.web;
 
-import com.caio.uol.infra.db.DataRepository;
+import com.caio.uol.infra.integration.domain.VingadoresWrapper;
+import com.caio.uol.service.HeroisService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,18 +9,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    private final DataRepository dataRepository;
+    private final HeroisService heroisService;
 
-    public MainController(DataRepository dataRepository){
-        this.dataRepository = dataRepository;
+    public MainController(HeroisService heroisService){
+        this.heroisService = heroisService;
     }
 
-    @GetMapping("/")
-    public String hello(Model model){
-        String user = dataRepository.createUser();
-        String listUsers = dataRepository.listUsers();
-        model.addAttribute("user", user);
-        model.addAttribute("listUsers", listUsers);
+    @GetMapping("/liga-da-justica")
+    public String hello(Model model) {
+        var ligaDaJustica = heroisService.getLigaDaJustica();
+        model.addAttribute("ligaDaJustica", ligaDaJustica);
+        return "index";
+    }
+
+    @GetMapping("/vingadores")
+    public String home(Model model){
+        VingadoresWrapper vingadoresWrapper = heroisService.getVingadores();
+        model.addAttribute("vingadoresWrapper", vingadoresWrapper);
         return "index";
     }
 
