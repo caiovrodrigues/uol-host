@@ -1,0 +1,15 @@
+gg:
+  jte:
+    development-mode: true
+spring:
+  application:
+    name: uol
+
+api:
+  base-url: https://raw.githubusercontent.com/uolhost/test-backEnd-Java/master/referencias/
+  vingadores:
+    value: httpClientVingadores
+    uri: /vingadores.json
+  liga-da-justica:
+    value: httpClientLigaJustica
+    uri: /liga_da_justica.xml

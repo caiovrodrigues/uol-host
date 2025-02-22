@@ -4,23 +4,25 @@ import java.util.Arrays;
 
 public enum Time {
 
-    VINGADORES("Os Vingadores", "liga_da_justica.xml"),
-    LIGA_DA_JUSTICA("Liga da Justiça", "vingadores.json");
+    VINGADORES("Os Vingadores", "vingadores.json", "vingadoresCodinomeProvider"),
+    LIGA_DA_JUSTICA("Liga da Justiça", "liga_da_justica.xml", "LDJCodinomeProvider");
 
     String name;
     String path;
+    String beanName;
 
-    Time(String name, String path){
+    Time(String name, String path, String beanName){
         this.name = name;
         this.path = path;
+        this.beanName = beanName;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getPath() {
-        return path;
+    public String getBeanName() {
+        return beanName;
     }
 
     public static Time getTimeByName(String name){

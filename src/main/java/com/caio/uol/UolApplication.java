@@ -12,14 +12,8 @@ public class UolApplication {
 
 	public static void main(String[] args) {
 		SpringApplication springApplication = new SpringApplication(UolApplication.class);
-		String profileActive = System.getenv("PROFILE_ACTIVE");
 
-		//1° forma, muito verbosa
-//		Optional.ofNullable(profileActive).ifPresentOrElse(
-//				springApplication::setAdditionalProfiles,
-//				() -> springApplication.setAdditionalProfiles("local"));
-
-		//2° forma, mais elegante e de fácil entendimento
+		String profileActive = System.getenv("SPRING_PROFILE_ACTIVE");
 		springApplication.setAdditionalProfiles(Objects.requireNonNullElse(profileActive, "local"));
 
 		springApplication.run(args);

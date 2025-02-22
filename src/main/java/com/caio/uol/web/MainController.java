@@ -5,12 +5,14 @@ import com.caio.uol.infra.integration.domain.VingadoresWrapper;
 import com.caio.uol.service.HeroisService;
 import com.caio.uol.service.JogadoresService;
 import com.caio.uol.web.dto.JogadorCreateRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -31,10 +33,12 @@ public class MainController {
     }
 
     @PostMapping("/jogador")
-    public String createJogador(JogadorCreateRequest jogador, Model model){
+    public void createJogador(@Valid JogadorCreateRequest jogador, Model model, HttpServletResponse response) throws Exception{
         Jogador jogadorPersisted = jogadoresService.createJogador(jogador);
+        List<Jogador> jogadores = jogadoresService.listJogadores();
         model.addAttribute("jogador", jogadorPersisted);
-        return "home";
+        model.addAttribute("jogadores", jogadores);
+        response.sendRedirect("");
     }
 
     @GetMapping("/liga-da-justica")

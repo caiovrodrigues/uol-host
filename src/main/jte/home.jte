@@ -1,10 +1,11 @@
 @import com.caio.uol.domain.Jogador
 @import com.caio.uol.domain.enumeration.Time
 @import java.util.List
+@import java.util.Map
 @import java.util.Objects
 
-@param Jogador jogador
 @param List<Jogador> jogadores = null
+@param Map<String, String> erros = null
 
 <!doctype html>
 <html lang="pt-BR">
@@ -23,18 +24,26 @@
             <label>
                 Nome:
                 <input type="text" name="nome"/>
+
             </label>
         </div>
 
         <label>
             Time:
             <select name="time">
-                <option value="default" selected>Selecione</option>
+                <option value="" selected>Selecione</option>
                 <option value="${Time.LIGA_DA_JUSTICA.getName()}">Liga da Justiça</option>
                 <option value="${Time.VINGADORES.getName()}">Vingadores</option>
             </select>
         </label>
         <br/>
+
+        @if(Objects.nonNull(erros))
+            @for(Map.Entry<String, String> erro : erros.entrySet())
+                <p style="color:red">Campo ${erro.getKey()}: ${erro.getValue()}</p>
+            @endfor
+        @endif
+
         <input type="submit" value="Cadastrar">
     </form>
 

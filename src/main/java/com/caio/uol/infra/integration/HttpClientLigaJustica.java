@@ -6,9 +6,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(value = "heroesHttpClientXML", url = "https://raw.githubusercontent.com/uolhost/test-backEnd-Java/master/referencias/", configuration = {FeignClientXmlConfiguration.class})
-public interface HeroesHttpClientXML {
+@FeignClient(value = "${api.liga-da-justica.value}", url = "${api.base-url}", configuration = {FeignClientXmlConfiguration.class})
+public interface HttpClientLigaJustica {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/liga_da_justica.xml")
+    @RequestMapping(method = RequestMethod.GET, value = "${api.liga-da-justica.uri}")
     LigaDaJustica getLigaDaJustica();
 }

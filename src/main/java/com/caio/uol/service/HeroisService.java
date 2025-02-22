@@ -1,7 +1,7 @@
 package com.caio.uol.service;
 
-import com.caio.uol.infra.integration.HeroesHttpClientJSON;
-import com.caio.uol.infra.integration.HeroesHttpClientXML;
+import com.caio.uol.infra.integration.HttpClientVingadores;
+import com.caio.uol.infra.integration.HttpClientLigaJustica;
 import com.caio.uol.infra.integration.domain.LigaDaJustica;
 import com.caio.uol.infra.integration.domain.VingadoresWrapper;
 import org.springframework.stereotype.Service;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class HeroisService {
 
-    private final HeroesHttpClientJSON vingadoresHttp;
-    private final HeroesHttpClientXML ligaDaJusticaHttp;
+    private final HttpClientVingadores vingadoresHttp;
+    private final HttpClientLigaJustica ligaDaJusticaHttp;
 
-    public HeroisService(HeroesHttpClientJSON vingadoresHttp, HeroesHttpClientXML ligaDaJusticaHttp){
+    public HeroisService(HttpClientVingadores vingadoresHttp, HttpClientLigaJustica ligaDaJusticaHttp){
         this.vingadoresHttp = vingadoresHttp;
         this.ligaDaJusticaHttp = ligaDaJusticaHttp;
     }

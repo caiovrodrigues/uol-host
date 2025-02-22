@@ -6,10 +6,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(value = "heroesHttpClientJSON", url = "https://raw.githubusercontent.com/uolhost/test-backEnd-Java/master/referencias/", configuration = {FeignClientJsonConfiguration.class})
-public interface HeroesHttpClientJSON {
+@FeignClient(value = "${api.vingadores.value}", url = "${api.base-url}", configuration = {FeignClientJsonConfiguration.class})
+public interface HttpClientVingadores {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/vingadores.json")
+    @RequestMapping(method = RequestMethod.GET, value = "${api.vingadores.uri}")
     VingadoresWrapper getVingadores();
 
 }

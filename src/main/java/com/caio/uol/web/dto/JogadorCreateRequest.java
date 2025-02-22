@@ -1,4 +1,10 @@
 package com.caio.uol.web.dto;
 
-public record JogadorCreateRequest(String nome, String time) {
-}
+import jakarta.validation.constraints.NotBlank;
+
+public record JogadorCreateRequest(
+        @NotBlank(message = "nome não pode ser vazio")
+        String nome,
+        @NotBlank(message = "time precisa ser escolhido")
+        String time
+) {}
