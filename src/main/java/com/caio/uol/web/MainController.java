@@ -10,8 +10,10 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -38,15 +40,28 @@ public class MainController {
     }
 
     @PostMapping("/players")
-    public String createJogador(@Valid JogadorCreateRequest jogador, Model model, HttpServletResponse response) {
-        Jogador jogadorPersisted = jogadoresService.createJogador(jogador);
-        List<Jogador> jogadores = jogadoresService.listJogadores();
+    public String createPlayer(@Valid JogadorCreateRequest jogadorDTO, Model model, HttpServletResponse response) throws IOException {
+        Jogador jogadorPersisted = jogadoresService.createJogador(jogadorDTO);
         model.addAttribute("jogador", jogadorPersisted);
+        return "sucesso";
+    }
+
+    @PostMapping("/players/edit")
+    public String editPlayer(@Valid JogadorCreateRequest jogadorDTO, Model model){
+        Jogador jogador = jogadoresService.editJogador(jogadorDTO);
+        model.addAttribute("jogador", jogador);
         return "sucesso";
     }
 
     @GetMapping("/cadastro")
     public String cadastro(){
+        return "cadastro";
+    }
+
+    @GetMapping("/cadastro/edit/{playerName}")
+    public String editPlayer(Model model, @PathVariable String playerName){
+        Jogador jogador = jogadoresService.findJogadorByName(playerName);
+        model.addAttribute("playerToEdit", jogador);
         return "cadastro";
     }
 

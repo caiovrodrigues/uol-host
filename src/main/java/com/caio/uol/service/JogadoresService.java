@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class JogadoresService {
@@ -32,7 +33,7 @@ public class JogadoresService {
         String heroImageUrl = getImageUrlOfHero(time, codinome);
         Jogador jogador = new Jogador(jogadorDTO.nome(), jogadorDTO.email(), jogadorDTO.telefone(), codinome, heroImageUrl, time);
 
-        return jogadorRepository.create(jogador);
+        return jogadorRepository.save(jogador);
     }
 
     private String getImageUrlOfHero(Time time, String codinome){
@@ -60,4 +61,25 @@ public class JogadoresService {
         };
     }
 
+    public Jogador findJogadorByName(String name) {
+        return jogadorRepository.findByName(name).orElseThrow();
+    }
+
+    public Jogador editJogador(JogadorCreateRequest jogadorDTO) {
+        Jogador jogador = jogadorRepository.findByName(jogadorDTO.nome()).orElseThrow();
+
+        jogador.setNome(jogadorDTO.nome());
+        jogador.setEmail(jogadorDTO.email());
+        jogador.setTelefone(jogadorDTO.telefone());
+
+        Time timeFromRequest = Time.getTimeByName(jogadorDTO.time());
+        if(!Objects.equals(timeFromRequest, jogador.getTime())){
+            String newCodinome = codinomeProvider.get(timeFromRequest.getBeanName()).getCodinome(timeFromRequest);
+            jogador.setCodinome(newCodinome);
+            jogador.setTime(timeFromRequest);
+            jogador.setHeroImageURL(getImageUrlOfHero(timeFromRequest, newCodinome));
+        }
+
+        return jogadorRepository.save(jogador);
+    }
 }

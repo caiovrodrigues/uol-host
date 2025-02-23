@@ -1,9 +1,10 @@
+@import com.caio.uol.domain.Jogador
 @import com.caio.uol.domain.enumeration.Time
 @import java.util.Map
 @import java.util.Objects
 
 @param Map<String, String> erros = null
-@param Boolean alertar = false
+@param Jogador playerToEdit
 
 <!doctype html>
 <html lang="pt-BR">
@@ -40,7 +41,6 @@
             box-shadow: none;
         }
     </style>
-
 </head>
 <body>
 <div class="content">
@@ -84,11 +84,24 @@
 
         <div style="display: flex">
             <button type="submit">Cadastrar</button>
-            <button type="button" onclick="javascript:window.location.href='players'">Listar jogadores</button>
+            <button type="button" onclick="javascript:window.location.href=window.location.origin + '/players'">Listar jogadores</button>
         </div>
 
     </form>
 </div>
-
+<script>
+    const el = (e) => document.querySelector(e);
+    @if(Objects.nonNull(playerToEdit))
+        el("form").setAttribute("action", "/players/edit");
+        el("#nome").value = "${playerToEdit.getNome()}";
+        el("#email").value = "${playerToEdit.getEmail()}";
+        el("#telefone").value = "${playerToEdit.getTelefone()}";
+        @if(Time.LIGA_DA_JUSTICA.equals(playerToEdit.getTime()))
+            el("#ligaDaJustica").setAttribute("checked", true);
+        @elseif(Time.VINGADORES.equals(playerToEdit.getTime()))
+            el("#vingadores").setAttribute("checked", true);
+        @endif
+    @endif
+</script>
 </body>
 </html>

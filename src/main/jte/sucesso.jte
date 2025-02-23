@@ -21,7 +21,7 @@
         }
 
         setTimeout(() => {
-            window.location.href='players';
+            window.location.href=window.location.origin + '/players';
         }, 4000);
     </script>
 </body>

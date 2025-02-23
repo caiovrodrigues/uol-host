@@ -5,19 +5,26 @@ import com.caio.uol.infra.db.JogadorRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Profile({"prod"})
 @Service
 public class FileJogadorRepository implements JogadorRepository {
 
     @Override
-    public Jogador create(Jogador jogador) {
+    public Jogador save(Jogador jogador) {
         return null;
     }
 
     @Override
     public List<Jogador> findAll() {
-        return null;
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<Jogador> findByName(String name) {
+        return Optional.empty();
     }
 }

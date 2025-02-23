@@ -60,6 +60,10 @@ public class Jogador {
         return heroImageURL;
     }
 
+    public void setHeroImageURL(String heroImageURL){
+        this.heroImageURL = heroImageURL;
+    }
+
     public Time getTime() {
         return time;
     }
