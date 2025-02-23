@@ -27,4 +27,9 @@ public class FileJogadorRepository implements JogadorRepository {
     public Optional<Jogador> findByName(String name) {
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Jogador> findByUuid(String uuid) {
+        return Optional.empty();
+    }
 }

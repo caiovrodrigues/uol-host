@@ -49,4 +49,9 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     public Optional<Jogador> findByName(String name) {
         return jogadores.stream().filter(jogador -> jogador.getNome().equals(name)).findFirst();
     }
+
+    @Override
+    public Optional<Jogador> findByUuid(String uuid) {
+        return jogadores.stream().filter(jogador -> jogador.getUuid().toString().equals(uuid)).findFirst();
+    }
 }

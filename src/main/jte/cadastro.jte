@@ -48,6 +48,7 @@
     <form method="POST" action="/players">
         <table>
             <tbody>
+            <input hidden="hidden" name="uuid" id="uuid"/>
                 <tr>
                     <td>Nome: </td>
                     <td><input type="text" name="nome" id="nome"/></td>
@@ -93,6 +94,7 @@
     const el = (e) => document.querySelector(e);
     @if(Objects.nonNull(playerToEdit))
         el("form").setAttribute("action", "/players/edit");
+        el("#uuid").value = "${playerToEdit.getUuid().toString()}";
         el("#nome").value = "${playerToEdit.getNome()}";
         el("#email").value = "${playerToEdit.getEmail()}";
         el("#telefone").value = "${playerToEdit.getTelefone()}";

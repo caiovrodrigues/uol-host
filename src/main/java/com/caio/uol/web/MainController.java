@@ -58,9 +58,9 @@ public class MainController {
         return "cadastro";
     }
 
-    @GetMapping("/cadastro/edit/{playerName}")
-    public String editPlayer(Model model, @PathVariable String playerName){
-        Jogador jogador = jogadoresService.findJogadorByName(playerName);
+    @GetMapping("/cadastro/edit/{uuidPlayer}")
+    public String editPlayer(Model model, @PathVariable String uuidPlayer){
+        Jogador jogador = jogadoresService.findJogadorByUuid(uuidPlayer);
         model.addAttribute("playerToEdit", jogador);
         return "cadastro";
     }

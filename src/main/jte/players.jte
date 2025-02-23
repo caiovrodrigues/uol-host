@@ -149,7 +149,7 @@
                         </td>
                         <td>${jog.getTime().getName()}</td>
                         <td style="display:flex;justify-content:center; align-items:center; gap:.5rem; vertical-align:middle">
-                            <button class="btn-edit" onclick="javascript:window.location.href='/cadastro/edit/${jog.getNome()}'"><span class="text">Editar</span><span>Editar!</span></button>
+                            <button class="btn-edit" onclick="javascript:window.location.href='/cadastro/edit/${jog.getUuid().toString()}'"><span class="text">Editar</span><span>Editar!</span></button>
                             <button class="btn-edit"><span class="text">Excluir</span><span>Excluir!</span></button>
                         </td>
                     </tr>

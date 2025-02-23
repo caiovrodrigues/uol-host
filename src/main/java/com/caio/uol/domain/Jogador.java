@@ -3,9 +3,10 @@ package com.caio.uol.domain;
 import com.caio.uol.domain.enumeration.Time;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Jogador {
-
+    private UUID uuid;
     private String nome;
     private String email;
     private String telefone;
@@ -16,12 +17,17 @@ public class Jogador {
     public Jogador(){}
 
     public Jogador(String nome, String email, String telefone, String codinome, String heroImageURL, Time time) {
+        this.uuid = UUID.randomUUID();
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.codinome = codinome;
         this.heroImageURL = heroImageURL;
         this.time = time;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getNome() {
@@ -77,11 +83,11 @@ public class Jogador {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Jogador jogador = (Jogador) o;
-        return Objects.equals(email, jogador.email);
+        return Objects.equals(uuid, jogador.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email);
+        return Objects.hash(uuid);
     }
 }

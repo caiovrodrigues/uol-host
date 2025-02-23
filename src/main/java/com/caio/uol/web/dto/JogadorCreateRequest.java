@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record JogadorCreateRequest(
+        String uuid,
         @NotBlank(message = "nome não pode ser vazio")
         String nome,
 

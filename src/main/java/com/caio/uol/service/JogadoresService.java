@@ -66,7 +66,7 @@ public class JogadoresService {
     }
 
     public Jogador editJogador(JogadorCreateRequest jogadorDTO) {
-        Jogador jogador = jogadorRepository.findByName(jogadorDTO.nome()).orElseThrow();
+        Jogador jogador = jogadorRepository.findByUuid(jogadorDTO.uuid()).orElseThrow();
 
         jogador.setNome(jogadorDTO.nome());
         jogador.setEmail(jogadorDTO.email());
@@ -81,5 +81,9 @@ public class JogadoresService {
         }
 
         return jogadorRepository.save(jogador);
+    }
+
+    public Jogador findJogadorByUuid(String uuidPlayer) {
+        return jogadorRepository.findByUuid(uuidPlayer).orElseThrow();
     }
 }
