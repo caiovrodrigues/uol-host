@@ -7,13 +7,13 @@ public record JogadorCreateRequest(
         @NotBlank(message = "nome não pode ser vazio")
         String nome,
 
-        @Email(message = "email precisa ser bem formado")
-        @NotBlank(message = "email não pode ser vazio")
+//        @Email(message = "email precisa ser bem formado")
+//        @NotBlank(message = "email não pode ser vazio")
         String email,
 
-        @NotBlank(message = "telefone não pode ser vazio")
+//        @NotBlank(message = "telefone não pode ser vazio")
         String telefone,
 
-        @NotBlank(message = "time precisa ser escolhido")
+//        @NotBlank(message = "time precisa ser escolhido")
         String time
 ) {}

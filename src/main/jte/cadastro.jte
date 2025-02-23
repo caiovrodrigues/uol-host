@@ -40,29 +40,25 @@
             box-shadow: none;
         }
     </style>
-    <script defer>
-        if(${alertar}){
-            alert("hello world")
-        }
-    </script>
+
 </head>
 <body>
 <div class="content">
     <h3 style="text-align:center; margin: 0 0 20px 0">Cadastro do jogador UOL</h3>
-    <form method="POST" action="/jogador">
+    <form method="POST" action="/players">
         <table>
             <tbody>
                 <tr>
                     <td>Nome: </td>
-                    <td><input type="text" name="nome"/></td>
+                    <td><input type="text" name="nome" id="nome"/></td>
                 </tr>
                 <tr>
                     <td>E-mail: </td>
-                    <td><input type="text" name="email"/></td>
+                    <td><input type="text" name="email" id="email"/></td>
                 </tr>
                 <tr>
                     <td>Telefone: </td>
-                    <td><input type="text" name="telefone"/></td>
+                    <td><input type="text" name="telefone" id="telefone"/></td>
                 </tr>
                 <tr>
                     <td>Grupo: </td>
@@ -93,5 +89,6 @@
 
     </form>
 </div>
+
 </body>
 </html>

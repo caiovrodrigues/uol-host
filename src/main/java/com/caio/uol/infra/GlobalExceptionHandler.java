@@ -21,7 +21,6 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         Map<String, String> erros = new HashMap<>();
         bindingResult.getFieldErrors().forEach(fieldErr -> erros.put(fieldErr.getField(), fieldErr.getDefaultMessage()));
-
         model.addAttribute("erros", erros);
         return "cadastro";
     }

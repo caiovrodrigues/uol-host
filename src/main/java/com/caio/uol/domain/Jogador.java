@@ -1,7 +1,8 @@
 package com.caio.uol.domain;
 
 import com.caio.uol.domain.enumeration.Time;
-import com.caio.uol.web.dto.JogadorCreateRequest;
+
+import java.util.Objects;
 
 public class Jogador {
 
@@ -9,20 +10,17 @@ public class Jogador {
     private String email;
     private String telefone;
     private String codinome;
+    private String heroImageURL;
     private Time time;
 
     public Jogador(){}
 
-    public Jogador(JogadorCreateRequest jogadorDto){
-        this.nome = jogadorDto.nome();
-
-    }
-
-    public Jogador(String nome, String email, String telefone, String codinome, Time time) {
+    public Jogador(String nome, String email, String telefone, String codinome, String heroImageURL, Time time) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.codinome = codinome;
+        this.heroImageURL = heroImageURL;
         this.time = time;
     }
 
@@ -58,11 +56,28 @@ public class Jogador {
         this.codinome = codinome;
     }
 
+    public String getHeroImageURL() {
+        return heroImageURL;
+    }
+
     public Time getTime() {
         return time;
     }
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Jogador jogador = (Jogador) o;
+        return Objects.equals(email, jogador.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 }

@@ -3,12 +3,12 @@ package com.caio.uol.service.strategy.impl;
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.domain.enumeration.Time;
 import com.caio.uol.infra.db.JogadorRepository;
-import com.caio.uol.infra.integration.domain.LigaDaJustica;
 import com.caio.uol.service.HeroisService;
 import com.caio.uol.service.strategy.CodinomeProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class LDJCodinomeProvider implements CodinomeProvider {
@@ -24,9 +24,9 @@ public class LDJCodinomeProvider implements CodinomeProvider {
 
     @Override
     public String getCodinome(Time time) {
-        LigaDaJustica allHeroesLDJ = heroisService.getLigaDaJustica();
-        List<String> codinomesJaEscolhidos = jogadorRepository.findAll().stream().map(Jogador::getCodinome).toList();
+        Stream<String> allCodinomesApi = heroisService.getLigaDaJustica().getCodinomes().stream();
+        List<String> allCodinomesEscolhidos = jogadorRepository.findAll().stream().map(Jogador::getCodinome).toList();
 
-       return allHeroesLDJ.getCodinomes().stream().filter(codinomeApi -> !codinomesJaEscolhidos.contains(codinomeApi)).findFirst().orElseThrow();
+       return allCodinomesApi.filter(codinome -> !allCodinomesEscolhidos.contains(codinome)).findFirst().orElseThrow();
     }
 }

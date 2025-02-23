@@ -80,7 +80,9 @@
                         <td>${jog.getNome()}</td>
                         <td>${jog.getEmail()}</td>
                         <td>${jog.getTelefone()}</td>
-                        <td>${jog.getCodinome()}</td>
+                        <td style="display:flex; justify-content:space-between; align-items:center;">
+                            ${jog.getCodinome()} <img width="40" height="40" style="object-fit:cover; object-position:top; border-radius:50%; box-shadow: 0px 0px 10px #a3afc9;" src="${jog.getHeroImageURL()}">
+                        </td>
                         <td>${jog.getTime().getName()}</td>
                     </tr>
                 @endfor

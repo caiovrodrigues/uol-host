@@ -37,18 +37,17 @@ public class MainController {
         return "players";
     }
 
-    @GetMapping("/cadastro")
-    public String cadastro(){
-        return "cadastro";
-    }
-
-    @PostMapping("/jogador")
-    public void createJogador(@Valid JogadorCreateRequest jogador, Model model, HttpServletResponse response) throws Exception{
+    @PostMapping("/players")
+    public String createJogador(@Valid JogadorCreateRequest jogador, Model model, HttpServletResponse response) {
         Jogador jogadorPersisted = jogadoresService.createJogador(jogador);
         List<Jogador> jogadores = jogadoresService.listJogadores();
         model.addAttribute("jogador", jogadorPersisted);
-        model.addAttribute("jogadores", jogadores);
-        response.sendRedirect("");
+        return "sucesso";
+    }
+
+    @GetMapping("/cadastro")
+    public String cadastro(){
+        return "cadastro";
     }
 
     @GetMapping("/liga-da-justica")
