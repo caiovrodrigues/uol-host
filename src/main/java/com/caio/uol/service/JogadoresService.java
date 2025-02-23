@@ -29,7 +29,7 @@ public class JogadoresService {
     public Jogador createJogador(JogadorCreateRequest jogadorDTO){
         Time time = Time.getTimeByName(jogadorDTO.time());
         String codinome = codinomeProvider.get(time.getBeanName()).getCodinome(time);
-        Jogador jogador = new Jogador(jogadorDTO.nome(), null, null, codinome, time);
+        Jogador jogador = new Jogador(jogadorDTO.nome(), jogadorDTO.email(), jogadorDTO.telefone(), codinome, time);
 
         return jogadorRepository.create(jogador);
     }

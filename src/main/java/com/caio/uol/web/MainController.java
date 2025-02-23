@@ -26,10 +26,20 @@ public class MainController {
     }
 
     @GetMapping
-    public String home(Model model){
+    public void home(HttpServletResponse response) throws Exception{
+        response.sendRedirect("players");
+    }
+
+    @GetMapping("/players")
+    public String players(Model model){
         List<Jogador> jogadores = jogadoresService.listJogadores();
         model.addAttribute("jogadores", jogadores);
-        return "home";
+        return "players";
+    }
+
+    @GetMapping("/cadastro")
+    public String cadastro(){
+        return "cadastro";
     }
 
     @PostMapping("/jogador")
