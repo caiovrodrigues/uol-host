@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -34,8 +31,12 @@ public class MainController {
     }
 
     @GetMapping("/players")
-    public String players(Model model){
-        List<Jogador> jogadores = jogadoresService.listJogadores();
+    public String players(Model model,
+                          @RequestParam(required = false) String nome,
+                          @RequestParam(required = false) Integer pageSize,
+                          @RequestParam(required = false) Integer pageNumber
+                          ){
+        List<Jogador> jogadores = jogadoresService.listJogadores(nome, pageSize, pageNumber);
         model.addAttribute("jogadores", jogadores);
         return "players";
     }

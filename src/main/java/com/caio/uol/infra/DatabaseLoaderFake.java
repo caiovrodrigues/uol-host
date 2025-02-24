@@ -21,6 +21,13 @@ public class DatabaseLoaderFake {
         jogadorRepository.save(new Jogador("Caio 1", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
         jogadorRepository.save(new Jogador("Caio 2", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
         jogadorRepository.save(new Jogador("Caio 3", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 4", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 5", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 6", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 7", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 8", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 9", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 10", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
     }
 
 }

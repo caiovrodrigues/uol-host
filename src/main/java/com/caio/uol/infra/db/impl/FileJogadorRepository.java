@@ -24,6 +24,11 @@ public class FileJogadorRepository implements JogadorRepository {
     }
 
     @Override
+    public List<Jogador> findAll(String nome, Integer pageSize, Integer pageNumber) {
+        return Collections.emptyList();
+    }
+
+    @Override
     public Optional<Jogador> findByName(String name) {
         return Optional.empty();
     }

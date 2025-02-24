@@ -11,6 +11,8 @@ public interface JogadorRepository {
 
     List<Jogador> findAll();
 
+    List<Jogador> findAll(String nome, Integer pageSize, Integer pageNumber);
+
     Optional<Jogador> findByName(String name);
 
     Optional<Jogador> findByUuid(String uuid);

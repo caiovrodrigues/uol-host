@@ -46,6 +46,21 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     }
 
     @Override
+    public List<Jogador> findAll(String nome, Integer pageSize, Integer pageNumber) {
+        Optional<String> nomeOpt = Optional.ofNullable(nome);
+        Optional<Integer> pageSizeOpt = Optional.ofNullable(pageSize);
+        Optional<Integer> pageNumberOpt = Optional.ofNullable(pageNumber);
+
+        if(pageSizeOpt.isPresent() && pageNumberOpt.isPresent())
+            return jogadores.stream().skip((long) pageSize * pageNumber).limit(pageSize).toList();
+
+        if(pageSizeOpt.isPresent())
+            return jogadores.stream().limit(pageSize).toList();
+
+        return jogadores;
+    }
+
+    @Override
     public Optional<Jogador> findByName(String name) {
         return jogadores.stream().filter(jogador -> jogador.getNome().equals(name)).findFirst();
     }
