@@ -46,18 +46,16 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     }
 
     @Override
-    public List<Jogador> findAll(String nome, Integer pageSize, Integer pageNumber) {
-        Optional<String> nomeOpt = Optional.ofNullable(nome);
-        Optional<Integer> pageSizeOpt = Optional.ofNullable(pageSize);
-        Optional<Integer> pageNumberOpt = Optional.ofNullable(pageNumber);
+    public List<Jogador> findAll(String sort, Integer pageSize, Integer pageNumber) {
+        Optional<String> sortOpt = Optional.ofNullable(sort);
 
-        if(pageSizeOpt.isPresent() && pageNumberOpt.isPresent())
-            return jogadores.stream().skip((long) pageSize * pageNumber).limit(pageSize).toList();
-
-        if(pageSizeOpt.isPresent())
-            return jogadores.stream().limit(pageSize).toList();
-
-        return jogadores;
+        return sortOpt
+                .map(s -> jogadores.stream()
+                        .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sort)))
+                        .skip((long) pageSize * (pageNumber - 1))
+                        .limit(pageSize)
+                        .toList())
+                .orElseGet(() -> jogadores.stream().skip((long) pageSize * (pageNumber - 1)).limit(pageSize).toList());
     }
 
     @Override
@@ -73,5 +71,17 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     @Override
     public void deleteByJogador(Jogador jogador) {
         jogadores.remove(jogador);
+    }
+
+    private String extractKeyToSort(Jogador jogador, String sortKey){
+        StringBuilder methodName = new StringBuilder();
+        methodName.append("get");
+        methodName.append(sortKey);
+        methodName.setCharAt(3, Character.toUpperCase(sortKey.charAt(0)));
+        try {
+            return (String) jogador.getClass().getDeclaredMethod(methodName.toString()).invoke(jogador);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

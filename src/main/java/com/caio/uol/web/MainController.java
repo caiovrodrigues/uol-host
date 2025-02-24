@@ -32,11 +32,11 @@ public class MainController {
 
     @GetMapping("/players")
     public String players(Model model,
-                          @RequestParam(required = false) String nome,
-                          @RequestParam(required = false) Integer pageSize,
-                          @RequestParam(required = false) Integer pageNumber
+                          @RequestParam(required = false) String sort,
+                          @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+                          @RequestParam(required = false, defaultValue = "1") Integer pageNumber
                           ){
-        List<Jogador> jogadores = jogadoresService.listJogadores(nome, pageSize, pageNumber);
+        List<Jogador> jogadores = jogadoresService.listJogadores(sort, pageSize, pageNumber);
         model.addAttribute("jogadores", jogadores);
         return "players";
     }

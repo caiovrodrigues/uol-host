@@ -23,8 +23,8 @@ public class JogadoresService {
         this.codinomeProvider = codinomeProvider;
     }
 
-    public List<Jogador> listJogadores(String nome, Integer pageSize, Integer pageNumber){
-        return jogadorRepository.findAll(nome, pageSize, pageNumber);
+    public List<Jogador> listJogadores(String sort, Integer pageSize, Integer pageNumber){
+        return jogadorRepository.findAll(sort, pageSize, pageNumber);
     }
 
     public Jogador createJogador(JogadorCreateRequest jogadorDTO){
