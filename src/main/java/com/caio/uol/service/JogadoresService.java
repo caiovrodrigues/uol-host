@@ -86,4 +86,9 @@ public class JogadoresService {
     public Jogador findJogadorByUuid(String uuidPlayer) {
         return jogadorRepository.findByUuid(uuidPlayer).orElseThrow();
     }
+
+    public void delete(String uuid) {
+        Jogador jogadorToBeDeleted = findJogadorByUuid(uuid);
+        jogadorRepository.deleteByJogador(jogadorToBeDeleted);
+    }
 }

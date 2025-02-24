@@ -18,7 +18,9 @@ public class DatabaseLoaderFake {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadData(){
-//        jogadorRepository.create(new Jogador("Caio", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 1", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 2", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadorRepository.save(new Jogador("Caio 3", "mail.com", "550011", "Teste", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
     }
 
 }

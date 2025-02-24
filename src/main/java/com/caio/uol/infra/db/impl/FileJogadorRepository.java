@@ -32,4 +32,9 @@ public class FileJogadorRepository implements JogadorRepository {
     public Optional<Jogador> findByUuid(String uuid) {
         return Optional.empty();
     }
+
+    @Override
+    public void deleteByJogador(Jogador jogador) {
+        //do nothing
+    }
 }

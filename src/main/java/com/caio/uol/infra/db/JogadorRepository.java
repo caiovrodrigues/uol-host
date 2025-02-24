@@ -14,4 +14,6 @@ public interface JogadorRepository {
     Optional<Jogador> findByName(String name);
 
     Optional<Jogador> findByUuid(String uuid);
+
+    void deleteByJogador(Jogador jogador);
 }

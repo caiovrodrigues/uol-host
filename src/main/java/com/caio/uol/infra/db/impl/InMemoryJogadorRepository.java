@@ -54,4 +54,9 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     public Optional<Jogador> findByUuid(String uuid) {
         return jogadores.stream().filter(jogador -> jogador.getUuid().toString().equals(uuid)).findFirst();
     }
+
+    @Override
+    public void deleteByJogador(Jogador jogador) {
+        jogadores.remove(jogador);
+    }
 }

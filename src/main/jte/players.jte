@@ -145,12 +145,12 @@
                         <td>${jog.getEmail()}</td>
                         <td>${jog.getTelefone()}</td>
                         <td style="display:flex; justify-content:space-between; align-items:center;">
-                            ${jog.getCodinome()} <img width="40" height="40" style="object-fit:cover; object-position:top; border-radius:50%; box-shadow: 0px 0px 10px #a3afc9;" src="${jog.getHeroImageURL()}">
+                            ${jog.getCodinome()} <img width="40" height="40" style="object-fit:cover; object-position:top; border-radius:50%; box-shadow: 0px 0px 10px #a3afc9;" src="${jog.getHeroImageURL()}" alt="Herói miniatura">
                         </td>
                         <td>${jog.getTime().getName()}</td>
                         <td style="display:flex;justify-content:center; align-items:center; gap:.5rem; vertical-align:middle">
                             <button class="btn-edit" onclick="javascript:window.location.href='/cadastro/edit/${jog.getUuid().toString()}'"><span class="text">Editar</span><span>Editar!</span></button>
-                            <button class="btn-edit"><span class="text">Excluir</span><span>Excluir!</span></button>
+                            <button class="btn-edit btn-delete" onclick="deleteJogador('${jog.getUuid().toString()}')"><span class="text">Excluir</span><span>Excluir!</span></button>
                         </td>
                     </tr>
                 @else
@@ -165,5 +165,12 @@
         <button id="btn-new-player" onclick="javascript:window.location.href='cadastro'">Novo jogador</button>
     </div>
 
+<script>
+    const el = (e) => document.querySelector(e);
+    async function deleteJogador(uuid){
+        const req = await fetch('/players/' + uuid, {method: "DELETE"});
+        window.location.href='';
+    }
+</script>
 </body>
 </html>

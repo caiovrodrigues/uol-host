@@ -84,7 +84,13 @@
         @endif
 
         <div style="display: flex">
-            <button type="submit">Cadastrar</button>
+            <button type="submit">
+                @if(playerToEdit == null)
+                    Cadastrar
+                @else
+                    Editar
+                @endif
+            </button>
             <button type="button" onclick="javascript:window.location.href=window.location.origin + '/players'">Listar jogadores</button>
         </div>
 
