@@ -4,10 +4,10 @@ import com.caio.uol.domain.Jogador;
 import com.caio.uol.domain.enumeration.Time;
 import com.caio.uol.infra.db.JogadorRepository;
 import com.caio.uol.service.strategy.CodinomeProvider;
+import com.caio.uol.web.dto.utils.Page;
 import com.caio.uol.web.dto.JogadorCreateRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -23,7 +23,7 @@ public class JogadoresService {
         this.codinomeProvider = codinomeProvider;
     }
 
-    public List<Jogador> listJogadores(String sort, Integer pageSize, Integer pageNumber){
+    public Page<Jogador> listJogadores(String sort, Integer pageSize, Integer pageNumber){
         return jogadorRepository.findAll(sort, pageSize, pageNumber);
     }
 

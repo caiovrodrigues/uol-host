@@ -2,6 +2,7 @@ package com.caio.uol.infra.db.impl;
 
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.infra.db.JogadorRepository;
+import com.caio.uol.web.dto.utils.Page;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,8 @@ public class FileJogadorRepository implements JogadorRepository {
     }
 
     @Override
-    public List<Jogador> findAll(String nome, Integer pageSize, Integer pageNumber) {
-        return Collections.emptyList();
+    public Page<Jogador> findAll(String nome, Integer pageSize, Integer pageNumber) {
+        return new Page<>();
     }
 
     @Override

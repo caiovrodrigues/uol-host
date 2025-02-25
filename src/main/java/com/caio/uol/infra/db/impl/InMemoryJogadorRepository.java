@@ -2,6 +2,7 @@ package com.caio.uol.infra.db.impl;
 
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.infra.db.JogadorRepository;
+import com.caio.uol.web.dto.utils.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -46,16 +47,19 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     }
 
     @Override
-    public List<Jogador> findAll(String sort, Integer pageSize, Integer pageNumber) {
+    public Page<Jogador> findAll(String sort, Integer pageSize, Integer pageNumber) {
         Optional<String> sortOpt = Optional.ofNullable(sort);
 
-        return sortOpt
-                .map(s -> jogadores.stream()
-                        .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sort)))
+        List<Jogador> jogadoresList = sortOpt
+                .map(sortName -> this.jogadores.stream()
+                        .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sortName)))
                         .skip((long) pageSize * (pageNumber - 1))
                         .limit(pageSize)
                         .toList())
-                .orElseGet(() -> jogadores.stream().skip((long) pageSize * (pageNumber - 1)).limit(pageSize).toList());
+                .orElseGet(() -> this.jogadores.stream().skip((long) pageSize * (pageNumber - 1)).limit(pageSize).toList());
+
+        int totalPages = (int) Math.ceil((double) jogadores.size() / pageSize);
+        return new Page<>(jogadoresList, pageSize, pageNumber, totalPages);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.caio.uol.infra;
 
-import com.caio.uol.domain.Jogador;
 import com.caio.uol.domain.enumeration.Time;
-import com.caio.uol.infra.db.JogadorRepository;
+import com.caio.uol.service.JogadoresService;
+import com.caio.uol.web.dto.JogadorCreateRequest;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -10,24 +10,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseLoaderFake {
 
-    private final JogadorRepository jogadorRepository;
+    private final JogadoresService jogadoresService;
 
-    public DatabaseLoaderFake(JogadorRepository jogadorRepository) {
-        this.jogadorRepository = jogadorRepository;
+    public DatabaseLoaderFake(JogadoresService jogadoresService) {
+        this.jogadoresService = jogadoresService;
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadData(){
-        jogadorRepository.save(new Jogador("Adriana", "sousadriana.com", "550011", "Lanterna Verde", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.LIGA_DA_JUSTICA));
-        jogadorRepository.save(new Jogador("Sandra", "sandra.com", "550011", "Hulk", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
-        jogadorRepository.save(new Jogador("Maria", "amaria.com", "550011", "Flash", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.LIGA_DA_JUSTICA));
-        jogadorRepository.save(new Jogador("Juliana", "barbosajuliana.com", "550011", "Capitão América", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
-        jogadorRepository.save(new Jogador("Francisco", "silvafrancisco.com", "550011", "Aquaman", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.LIGA_DA_JUSTICA));
-        jogadorRepository.save(new Jogador("Carlos", "arlosc.com", "550011", "Pantera Negra", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
-        jogadorRepository.save(new Jogador("Antônio", "zeantonio.com", "550011", "Batman", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.LIGA_DA_JUSTICA));
-        jogadorRepository.save(new Jogador("João", "souzajoao.com", "550011", "Homem de Ferro", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
-        jogadorRepository.save(new Jogador("Lourenço", "bialourenco.com", "550011", "Visão", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
-        jogadorRepository.save(new Jogador("Bruna", "bruna.com", "550011", "Feiticeira Escarlate", "https://cdn-icons-png.flaticon.com/512/2748/2748558.png", Time.VINGADORES));
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Adriana", "sousadriana.com", "550011", Time.LIGA_DA_JUSTICA.getName()));
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Sandra", "sandra.com", "550011", Time.VINGADORES.getName()));
+
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Maria", "amaria.com", "550011", Time.LIGA_DA_JUSTICA.getName()));
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Juliana", "barbosajuliana.com", "550011", Time.VINGADORES.getName()));
+
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Francisco", "silvafrancisco.com", "550011", Time.LIGA_DA_JUSTICA.getName()));
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Carlos", "arlosc.com", "550011", Time.VINGADORES.getName()));
+
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Antônio", "zeantonio.com", "550011", Time.LIGA_DA_JUSTICA.getName()));
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "João", "souzajoao.com", "550011", Time.VINGADORES.getName()));
+
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Lourenço", "bialourenco.com", "550011", Time.LIGA_DA_JUSTICA.getName()));
+        jogadoresService.createJogador(new JogadorCreateRequest(null, "Bruna", "bruna.com", "550011", Time.VINGADORES.getName()));
     }
 
 }

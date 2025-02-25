@@ -1,8 +1,7 @@
 @import com.caio.uol.domain.Jogador
-@import java.util.List
-@import java.util.Objects
+@import com.caio.uol.web.dto.utils.Page
 
-@param List<Jogador> jogadores = null
+@param Page<Jogador> jogadoresPageable = null
 
 
 <!doctype html>
@@ -127,50 +126,109 @@
 </head>
 <body>
     <div class="content">
-        @if(Objects.nonNull(jogadores))
-            <h3 style="text-align:center; margin: 0 0 20px 0">Lista de jogadores</h3>
-            <table>
-                <thead>
-                    <th style="width: 14.6%">Nome</th>
-                    <th style="width: 16.6%">E-mail</th>
-                    <th style="width: 16.6%">Telefone</th>
-                    <th style="width: 18.6%">Codinome</th>
-                    <th style="width: 16.6%">Grupo</th>
-                    <th style="width: 16.6%">Ações</th>
-                </thead>
-                <tbody>
-                @for(Jogador jog : jogadores)
-                    <tr>
-                        <td>${jog.getNome()}</td>
-                        <td>${jog.getEmail()}</td>
-                        <td>${jog.getTelefone()}</td>
-                        <td style="display:flex; justify-content:space-between; align-items:center;">
-                            ${jog.getCodinome()} <img width="40" height="40" style="object-fit:cover; object-position:top; border-radius:50%; box-shadow: 0px 0px 10px #a3afc9;" src="${jog.getHeroImageURL()}" alt="Herói miniatura">
-                        </td>
-                        <td>${jog.getTime().getName()}</td>
-                        <td style="display:flex;justify-content:center; align-items:center; gap:.5rem; vertical-align:middle">
-                            <button class="btn-edit" onclick="javascript:window.location.href='/cadastro/edit/${jog.getUuid().toString()}'"><span class="text">Editar</span><span>Editar!</span></button>
-                            <button class="btn-edit btn-delete" onclick="deleteJogador('${jog.getUuid().toString()}')"><span class="text">Excluir</span><span>Excluir!</span></button>
-                        </td>
-                    </tr>
-                @else
-                    <tr>
-                        <td colspan="7" style="text-align:center;">Sem jogadores cadastrados 🥴</td>
-                    </tr>
-                @endfor
-                </tbody>
-            </table>
-        @endif
+        <h3 style="text-align:center; margin: 0 0 20px 0">Lista de jogadores</h3>
+        <table>
+            <thead>
+            <th style="width: 14.6%; position: relative">
+                Nome
+                <span style="position: absolute; right: .5rem; top: 40%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer" data-key="nome">&#8616;</span>
+            </th>
+                <th style="width: 16.6%; position: relative">
+                    E-mail
+                    <span style="position: absolute; right: .5rem; top: 40%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer" data-key="email">&#8616;</span>
+                </th>
+                <th style="width: 14.6%">Telefone</th>
+                <th style="width: 20.6%; position: relative">
+                    Codinome
+                    <span style="position: absolute; right: .5rem; top: 40%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer" data-key="codinome">&#8616;</span>
+                </th>
+                <th style="width: 16.6%">Grupo</th>
+                <th style="width: 16.6%">Ações</th>
+            </thead>
+            <tbody>
+            @for(Jogador jog : jogadoresPageable.content())
+                <tr>
+                    <td>${jog.getNome()}</td>
+                    <td>${jog.getEmail()}</td>
+                    <td>${jog.getTelefone()}</td>
+                    <td style="display:flex; justify-content:space-between; align-items:center;">
+                        ${jog.getCodinome()} <img width="40" height="40" style="object-fit:cover; object-position:top; border-radius:50%; box-shadow: 0px 0px 10px #a3afc9;" src="${jog.getHeroImageURL()}" alt="Herói miniatura">
+                    </td>
+                    <td>${jog.getTime().getName()}</td>
+                    <td style="display:flex;justify-content:center; align-items:center; gap:.5rem; vertical-align:middle">
+                        <button class="btn-edit" onclick="javascript:window.location.href='/cadastro/edit/${jog.getUuid().toString()}'"><span class="text">Editar</span><span>Editar!</span></button>
+                        <button class="btn-edit btn-delete" onclick="deleteJogador('${jog.getUuid().toString()}')"><span class="text">Excluir</span><span>Excluir!</span></button>
+                    </td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="7" style="text-align:center;">Sem jogadores cadastrados 🥴</td>
+                </tr>
+            @endfor
+            </tbody>
+        </table>
 
         <button id="btn-new-player" onclick="javascript:window.location.href='cadastro'">Novo jogador</button>
+        <div style="display:flex; justify-content:center; margin-top: 1rem">
+            @for(int i = 1; i <= jogadoresPageable.totalPages(); i++)
+                <a style="padding: 5px 15px; color: blue; text-decoration: underline; cursor: pointer" data-key="${i}" onclick="changePageNumber('${i}')">${i}</a>
+            @endfor
+        </div>
+
+
     </div>
 
 <script>
     const el = (e) => document.querySelector(e);
+    const els = (e) => document.querySelectorAll(e);
+
+    const actualUrlParams = new URL(window.location.href).search;
+    const url = new URLSearchParams(actualUrlParams);
+
     async function deleteJogador(uuid){
         const req = await fetch('/players/' + uuid, {method: "DELETE"});
         window.location.href='';
     }
+
+    function changePageNumber(pageNumber){
+        if(url.get('pageNumber') == pageNumber)
+            return;
+
+        url.set('pageNumber', pageNumber);
+        redirect();
+    }
+
+    function sortBy(field){
+        url.set('sort', field);
+        redirect();
+    }
+
+    function redirect(){
+        window.location.href = window.location.origin + window.location.pathname + '?' + url.toString();
+    }
+
+    els('a[data-key]').forEach(pageNumberEl => {
+        const key = pageNumberEl.getAttribute('data-key');
+        if(key == ${jogadoresPageable.pageNumber()}){
+            pageNumberEl.style.background = '#000';
+            pageNumberEl.style.color = 'white';
+        }
+    });
+
+    els('span[data-key]').forEach(sortName => {
+        const key = sortName.getAttribute('data-key');
+        if(url.get('sort') == key){
+            sortName.style.color = 'green';
+        }
+        sortName.addEventListener('click', () => {
+            if(url.get('sort') == key){
+                url.delete('sort');
+                redirect();
+                return;
+            }
+            sortBy(key);
+        });
+    });
 </script>
 </body>
 </html>

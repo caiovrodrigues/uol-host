@@ -4,6 +4,7 @@ import com.caio.uol.domain.Jogador;
 import com.caio.uol.infra.integration.domain.VingadoresWrapper;
 import com.caio.uol.service.HeroisService;
 import com.caio.uol.service.JogadoresService;
+import com.caio.uol.web.dto.utils.Page;
 import com.caio.uol.web.dto.JogadorCreateRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.*;
 
 @Controller
 public class MainController {
@@ -36,8 +36,8 @@ public class MainController {
                           @RequestParam(required = false, defaultValue = "10") Integer pageSize,
                           @RequestParam(required = false, defaultValue = "1") Integer pageNumber
                           ){
-        List<Jogador> jogadores = jogadoresService.listJogadores(sort, pageSize, pageNumber);
-        model.addAttribute("jogadores", jogadores);
+        Page<Jogador> jogadores = jogadoresService.listJogadores(sort, pageSize, pageNumber);
+        model.addAttribute("jogadoresPageable", jogadores);
         return "players";
     }
 
