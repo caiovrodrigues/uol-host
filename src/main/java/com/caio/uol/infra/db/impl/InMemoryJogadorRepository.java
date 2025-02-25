@@ -15,9 +15,7 @@ import java.util.*;
 public class InMemoryJogadorRepository implements JogadorRepository {
 
     private List<Jogador> jogadores = new ArrayList<>();
-    private Logger log = LoggerFactory.getLogger(this.getClass());
-
-    public InMemoryJogadorRepository(){}
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Jogador save(Jogador jogador) {
@@ -50,16 +48,22 @@ public class InMemoryJogadorRepository implements JogadorRepository {
     public Page<Jogador> findAll(String sort, Integer pageSize, Integer pageNumber) {
         Optional<String> sortOpt = Optional.ofNullable(sort);
 
+        int totalPlayers = jogadores.size();
+        int totalPages = (int) Math.ceil((double) totalPlayers / pageSize);
+        int pageNumberFix = Math.min(pageNumber, totalPages);
+
         List<Jogador> jogadoresList = sortOpt
-                .map(sortName -> this.jogadores.stream()
-                        .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sortName)))
-                        .skip((long) pageSize * (pageNumber - 1))
+                .map(sortField -> this.jogadores.stream()
+                        .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sortField)))
+                        .skip((long) pageSize * (pageNumberFix - 1))
                         .limit(pageSize)
                         .toList())
-                .orElseGet(() -> this.jogadores.stream().skip((long) pageSize * (pageNumber - 1)).limit(pageSize).toList());
+                .orElseGet(() -> this.jogadores.stream()
+                        .skip((long) pageSize * (pageNumberFix - 1))
+                        .limit(pageSize)
+                        .toList());
 
-        int totalPages = (int) Math.ceil((double) jogadores.size() / pageSize);
-        return new Page<>(jogadoresList, pageSize, pageNumber, totalPages);
+        return new Page<>(jogadoresList, pageSize, pageNumberFix, totalPlayers, totalPages);
     }
 
     @Override

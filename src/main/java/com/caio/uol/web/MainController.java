@@ -37,12 +37,12 @@ public class MainController {
                           @RequestParam(required = false, defaultValue = "1") Integer pageNumber
                           ){
         Page<Jogador> jogadores = jogadoresService.listJogadores(sort, pageSize, pageNumber);
-        model.addAttribute("jogadoresPageable", jogadores);
+        model.addAttribute("playersPage", jogadores);
         return "players";
     }
 
     @PostMapping("/players")
-    public String createPlayer(@Valid JogadorCreateRequest jogadorDTO, Model model, HttpServletResponse response) throws IOException {
+    public String createPlayer(@Valid JogadorCreateRequest jogadorDTO, Model model){
         Jogador jogadorPersisted = jogadoresService.createJogador(jogadorDTO);
         model.addAttribute("jogador", jogadorPersisted);
         return "sucesso";

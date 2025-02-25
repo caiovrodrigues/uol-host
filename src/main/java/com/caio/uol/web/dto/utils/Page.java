@@ -7,10 +7,11 @@ public record Page<T>(
         List<T> content,
         Integer pageSize,
         Integer pageNumber,
+        Integer totalElements,
         Integer totalPages
 ) {
 
     public Page() {
-        this(Collections.emptyList(), 0,0,0);
+        this(Collections.emptyList(), 0, 0,0,0);
     }
 }

@@ -1,7 +1,8 @@
 @import com.caio.uol.domain.Jogador
 @import com.caio.uol.web.dto.utils.Page
+@import java.util.stream.Stream
 
-@param Page<Jogador> jogadoresPageable = null
+@param Page<Jogador> playersPage = null
 
 
 <!doctype html>
@@ -20,7 +21,16 @@
             padding: 0;
         }
         th{
+            position: relative;
             background-color: #a3afc9;
+        }
+        th span{
+            position: absolute;
+            right: .5rem;
+            top: 40%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            cursor: pointer;
         }
         th, td{
             padding: .2rem 1rem;
@@ -122,6 +132,16 @@
          transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
         }
 
+        .pagination-option{
+            padding: 5px 15px;
+            cursor: pointer;
+        }
+
+        .pagination-option:hover {
+            color: white;
+            background: #303030;
+        }
+
     </style>
 </head>
 <body>
@@ -129,24 +149,26 @@
         <h3 style="text-align:center; margin: 0 0 20px 0">Lista de jogadores</h3>
         <table>
             <thead>
-            <th style="width: 14.6%; position: relative">
-                Nome
-                <span style="position: absolute; right: .5rem; top: 40%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer" data-key="nome">&#8616;</span>
-            </th>
-                <th style="width: 16.6%; position: relative">
-                    E-mail
-                    <span style="position: absolute; right: .5rem; top: 40%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer" data-key="email">&#8616;</span>
-                </th>
-                <th style="width: 14.6%">Telefone</th>
-                <th style="width: 20.6%; position: relative">
-                    Codinome
-                    <span style="position: absolute; right: .5rem; top: 40%; transform: translateY(-50%); font-size: 1.1rem; cursor: pointer" data-key="codinome">&#8616;</span>
-                </th>
-                <th style="width: 16.6%">Grupo</th>
-                <th style="width: 16.6%">Ações</th>
+                <tr>
+                    <th>
+                        Nome
+                        <span data-key="nome">&#8616;</span>
+                    </th>
+                    <th>
+                        E-mail
+                        <span data-key="email">&#8616;</span>
+                    </th>
+                    <th>Telefone</th>
+                    <th>
+                        Codinome
+                        <span data-key="codinome">&#8616;</span>
+                    </th>
+                    <th>Grupo</th>
+                    <th>Ações</th>
+                </tr>
             </thead>
             <tbody>
-            @for(Jogador jog : jogadoresPageable.content())
+            @for(Jogador jog : playersPage.content())
                 <tr>
                     <td>${jog.getNome()}</td>
                     <td>${jog.getEmail()}</td>
@@ -173,19 +195,24 @@
             <div style="position: absolute; left: 1rem">
                 <label>Registros por página</label>
                 <select style="border: none" name="pageSize" onchange="changePageSize()">
-                    <option value="2">2</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="8">8</option>
-                    <option value="10">10</option>
+                    @for(int optionNumber : Stream.iterate(1, n -> !n.equals(playersPage.totalElements() + 1), n -> ++n).toList())
+                        <option value="${optionNumber}">${optionNumber}</option>
+                    @endfor
                 </select>
+                <div>
+                    <span style="color: #545454">
+                        Mostrando ${(playersPage.pageSize() * playersPage.pageNumber()) - playersPage.pageSize() + 1}
+                        a ${(playersPage.pageSize() * playersPage.pageNumber()) - playersPage.pageSize() + playersPage.content().size()}
+                        de ${playersPage.totalElements()}
+                        registros
+                    </span>
+                </div>
             </div>
-            @for(int i = 1; i <= jogadoresPageable.totalPages(); i++)
-                <a style="padding: 5px 15px; color: blue; text-decoration: underline; cursor: pointer" data-key="${i}" onclick="changePageNumber('${i}')">${i}</a>
+
+            @for(int i = 1; i <= playersPage.totalPages(); i++)
+                <a class="pagination-option" data-key="${i}" onclick="changePageNumber('${i}')">${i}</a>
             @endfor
         </div>
-
 
     </div>
 
@@ -202,7 +229,7 @@
     }
 
     function changePageNumber(pageNumber){
-        if(${jogadoresPageable.pageNumber()} == pageNumber)
+        if(${playersPage.pageNumber()} == pageNumber)
             return;
 
         url.set('pageNumber', pageNumber);
@@ -226,14 +253,14 @@
 
     els('a[data-key]').forEach(pageNumberEl => {
         const key = pageNumberEl.getAttribute('data-key');
-        if(key == ${jogadoresPageable.pageNumber()}){
-            pageNumberEl.style.background = '#000';
+        if(key == ${playersPage.pageNumber()}){
+            pageNumberEl.style.background = '#303030';
             pageNumberEl.style.color = 'white';
         }
     });
 
     els('option').forEach(option => {
-        const pageSize = ${jogadoresPageable.pageSize()};
+        const pageSize = ${playersPage.pageSize()};
         console.log(pageSize);
         if(option.value == pageSize){
             option.selected = true;
