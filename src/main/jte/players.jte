@@ -169,7 +169,18 @@
         </table>
 
         <button id="btn-new-player" onclick="javascript:window.location.href='cadastro'">Novo jogador</button>
-        <div style="display:flex; justify-content:center; margin-top: 1rem">
+        <div style="display:flex; justify-content:center; margin-top: 1rem; position: relative;">
+            <div style="position: absolute; left: 1rem">
+                <label>Registros por página</label>
+                <select style="border: none" name="pageSize" onchange="changePageSize()">
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
             @for(int i = 1; i <= jogadoresPageable.totalPages(); i++)
                 <a style="padding: 5px 15px; color: blue; text-decoration: underline; cursor: pointer" data-key="${i}" onclick="changePageNumber('${i}')">${i}</a>
             @endfor
@@ -191,10 +202,16 @@
     }
 
     function changePageNumber(pageNumber){
-        if(url.get('pageNumber') == pageNumber)
+        if(${jogadoresPageable.pageNumber()} == pageNumber)
             return;
 
         url.set('pageNumber', pageNumber);
+        redirect();
+    }
+
+    function changePageSize(){
+        const pageSize = el('select').value;
+        url.set('pageSize', pageSize);
         redirect();
     }
 
@@ -212,6 +229,14 @@
         if(key == ${jogadoresPageable.pageNumber()}){
             pageNumberEl.style.background = '#000';
             pageNumberEl.style.color = 'white';
+        }
+    });
+
+    els('option').forEach(option => {
+        const pageSize = ${jogadoresPageable.pageSize()};
+        console.log(pageSize);
+        if(option.value == pageSize){
+            option.selected = true;
         }
     });
 
