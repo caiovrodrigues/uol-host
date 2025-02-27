@@ -2,6 +2,7 @@ package com.caio.uol.infra.db.impl;
 
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.infra.db.JogadorRepository;
+import com.caio.uol.service.strategy.CustomConstants;
 import com.caio.uol.web.dto.utils.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Profile({"local"})
+@Profile({CustomConstants.local})
 @Service
 public class InMemoryJogadorRepository implements JogadorRepository {
 
@@ -87,7 +88,7 @@ public class InMemoryJogadorRepository implements JogadorRepository {
         methodName.append(sortKey);
         methodName.setCharAt(3, Character.toUpperCase(sortKey.charAt(0)));
         try {
-            return (String) jogador.getClass().getDeclaredMethod(methodName.toString()).invoke(jogador);
+            return ((String) jogador.getClass().getDeclaredMethod(methodName.toString()).invoke(jogador)).toLowerCase();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

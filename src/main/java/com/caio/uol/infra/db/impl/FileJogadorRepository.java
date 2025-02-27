@@ -2,6 +2,7 @@ package com.caio.uol.infra.db.impl;
 
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.infra.db.JogadorRepository;
+import com.caio.uol.service.strategy.CustomConstants;
 import com.caio.uol.web.dto.utils.Page;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Profile({"prod"})
+@Profile({CustomConstants.prod})
 @Service
 public class FileJogadorRepository implements JogadorRepository {
 

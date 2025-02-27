@@ -1,11 +1,13 @@
 package com.caio.uol.domain.enumeration;
 
+import com.caio.uol.service.strategy.CustomConstants;
+
 import java.util.Arrays;
 
 public enum Time {
 
-    VINGADORES("Os Vingadores", "vingadores.json", "vingadoresCodinomeProvider"),
-    LIGA_DA_JUSTICA("Liga da Justiça", "liga_da_justica.xml", "LDJCodinomeProvider");
+    VINGADORES("Os Vingadores", "vingadores.json", CustomConstants.VingadoresProviderName),
+    LIGA_DA_JUSTICA("Liga da Justiça", "liga_da_justica.xml", CustomConstants.LdjProviderName);
 
     String name;
     String path;

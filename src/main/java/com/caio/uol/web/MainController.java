@@ -51,7 +51,6 @@ public class MainController {
     @DeleteMapping("/players/{uuid}")
     public void deletePlayer(@PathVariable String uuid){
         jogadoresService.delete(uuid);
-        System.out.println("Deletado com sucesso: " + uuid);
     }
 
     @PostMapping("/players/edit")

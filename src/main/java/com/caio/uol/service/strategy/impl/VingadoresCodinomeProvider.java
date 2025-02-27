@@ -6,13 +6,14 @@ import com.caio.uol.infra.GroupHeroesNotAvailable;
 import com.caio.uol.infra.db.JogadorRepository;
 import com.caio.uol.infra.integration.domain.Vingadores;
 import com.caio.uol.service.HeroisService;
+import com.caio.uol.service.strategy.CustomConstants;
 import com.caio.uol.service.strategy.CodinomeProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-@Service
+@Service(CustomConstants.VingadoresProviderName)
 public class VingadoresCodinomeProvider implements CodinomeProvider {
 
     private final HeroisService heroisService;
