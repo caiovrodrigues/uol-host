@@ -5,6 +5,7 @@
 
 @param Map<String, String> erros = null
 @param Jogador playerToEdit
+@param String timeNotAvailableError
 
 <!doctype html>
 <html lang="pt-BR">
@@ -96,6 +97,16 @@
 
     </form>
 </div>
+
+<dialog id="dialog">
+    <h2>Que pena...</h2>
+    <div>
+        Todos os heróis de ${timeNotAvailableError} já foram escolhidos 🥸
+        <br>
+        <button id="close-dialog" autofocus>Ok</button>
+    </div>
+</dialog>
+
 <script>
     const el = (e) => document.querySelector(e);
     @if(Objects.nonNull(playerToEdit))
@@ -109,6 +120,14 @@
         @elseif(Time.VINGADORES.equals(playerToEdit.getTime()))
             el("#vingadores").setAttribute("checked", true);
         @endif
+    @endif
+
+    const dialog = el("#dialog");
+    el("#close-dialog").addEventListener("click", () => {
+      dialog.close();
+    });
+    @if(Objects.nonNull(timeNotAvailableError))
+        dialog.showModal();
     @endif
 </script>
 </body>

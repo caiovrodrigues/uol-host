@@ -2,6 +2,7 @@ package com.caio.uol.service.strategy.impl;
 
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.domain.enumeration.Time;
+import com.caio.uol.infra.GroupHeroesNotAvailable;
 import com.caio.uol.infra.db.JogadorRepository;
 import com.caio.uol.service.HeroisService;
 import com.caio.uol.service.strategy.CodinomeProvider;
@@ -27,6 +28,6 @@ public class LDJCodinomeProvider implements CodinomeProvider {
         Stream<String> allCodinomesApi = heroisService.getLigaDaJustica().getCodinomes().stream();
         List<String> allCodinomesEscolhidos = jogadorRepository.findAll().stream().map(Jogador::getCodinome).toList();
 
-       return allCodinomesApi.filter(codinome -> !allCodinomesEscolhidos.contains(codinome)).findFirst().orElseThrow();
+        return allCodinomesApi.filter(codinome -> !allCodinomesEscolhidos.contains(codinome)).findFirst().orElseThrow(() -> new GroupHeroesNotAvailable(Time.LIGA_DA_JUSTICA.getName()));
     }
 }

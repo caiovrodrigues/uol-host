@@ -25,4 +25,11 @@ public class GlobalExceptionHandler {
         return "cadastro";
     }
 
+    @ExceptionHandler(GroupHeroesNotAvailable.class)
+    public String timeHeroisNaoDisponivel(GroupHeroesNotAvailable ex, Model model){
+        log.error("Heróis não disponível; Time: {}", ex.getMessage());
+        model.addAttribute("timeNotAvailableError", ex.getMessage());
+        return "cadastro";
+    }
+
 }

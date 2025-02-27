@@ -2,6 +2,7 @@ package com.caio.uol.service.strategy.impl;
 
 import com.caio.uol.domain.Jogador;
 import com.caio.uol.domain.enumeration.Time;
+import com.caio.uol.infra.GroupHeroesNotAvailable;
 import com.caio.uol.infra.db.JogadorRepository;
 import com.caio.uol.infra.integration.domain.Vingadores;
 import com.caio.uol.service.HeroisService;
@@ -28,6 +29,6 @@ public class VingadoresCodinomeProvider implements CodinomeProvider {
         Stream<String> allCodinomesApi = heroisService.getVingadores().vingadores().stream().map(Vingadores::codinome);
         List<String> allCodinomesEscolhidos = jogadorRepository.findAll().stream().map(Jogador::getCodinome).toList();
 
-        return allCodinomesApi.filter(codinome -> !allCodinomesEscolhidos.contains(codinome)).findFirst().orElseThrow();
+        return allCodinomesApi.filter(codinome -> !allCodinomesEscolhidos.contains(codinome)).findFirst().orElseThrow(() -> new GroupHeroesNotAvailable(Time.VINGADORES.getName()));
     }
 }
