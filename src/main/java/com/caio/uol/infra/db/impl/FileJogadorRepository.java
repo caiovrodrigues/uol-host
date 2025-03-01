@@ -93,7 +93,13 @@ public class FileJogadorRepository implements JogadorRepository {
 
     @Override
     public void deleteByJogador(Jogador jogador) {
-        //do nothing
+        List<Jogador> jogadores = findAll();
+        jogadores.remove(jogador);
+        try(ObjectOutputStream outputStream = getOutputStream()){
+            outputStream.writeObject(jogadores);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     private String extractKeyToSort(Jogador jogador, String sortKey){
