@@ -50,7 +50,7 @@
             display:flex;
             flex-flow: column wrap;
             border: 1px solid #ccc;
-            padding: 2rem 0;
+            padding: 1.5rem 0 0 0;
             margin: auto;
         }
 
@@ -135,6 +135,8 @@
         .pagination-option{
             padding: 5px 15px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
         .pagination-option:hover {
@@ -191,8 +193,8 @@
         </table>
 
         <button id="btn-new-player" onclick="javascript:window.location.href='cadastro'">Novo jogador</button>
-        <div style="display:flex; justify-content:center; margin-top: 1rem; position: relative;">
-            <div style="position: absolute; left: 1rem">
+        <div style="display: flex; padding-left: 1rem; height: 50px; margin: 1rem 0;">
+            <div style="flex: 1;">
                 <label>Registros por página</label>
                 <select style="border: none" name="pageSize" onchange="changePageSize()">
                     @for(int optionNumber : Stream.iterate(1, n -> !n.equals(playersPage.totalElements() + 1), n -> ++n).toList())
@@ -200,19 +202,23 @@
                     @endfor
                 </select>
                 <div>
-                    <span style="color: #545454">
-                        Mostrando ${(playersPage.pageSize() * playersPage.pageNumber()) - playersPage.pageSize() + 1}
-                        a ${(playersPage.pageSize() * playersPage.pageNumber()) - playersPage.pageSize() + playersPage.content().size()}
-                        de ${playersPage.totalElements()}
-                        registros
-                    </span>
+                <span style="color: #545454">
+                    Mostrando ${Math.max((playersPage.pageSize() * playersPage.pageNumber()) - playersPage.pageSize() + 1, 0)}
+                    a ${Math.max(playersPage.pageSize() * playersPage.pageNumber() - playersPage.pageSize() + playersPage.content().size(), 0)}
+                    de ${playersPage.totalElements()}
+                    registros
+                </span>
                 </div>
             </div>
 
-            @for(int i = 1; i <= playersPage.totalPages(); i++)
-                <a class="pagination-option" data-key="${i}" onclick="changePageNumber('${i}')">${i}</a>
-            @endfor
+            <div style="display:flex; justify-content:center; flex: 1;">
+                @for(int i = 1; i <= playersPage.totalPages(); i++)
+                    <a class="pagination-option" data-key="${i}" onclick="changePageNumber('${i}')">${i}</a>
+                @endfor
+            </div>
+            <div style="flex: 1;"></div>
         </div>
+
 
     </div>
 
