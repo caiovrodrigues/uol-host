@@ -52,15 +52,16 @@ public class InMemoryJogadorRepository implements JogadorRepository {
         int totalPlayers = jogadores.size();
         int totalPages = (int) Math.ceil((double) totalPlayers / pageSize);
         int pageNumberFix = Math.min(pageNumber, totalPages);
+        long skip = (long) pageSize * (Math.max(pageNumberFix - 1, 0));
 
         List<Jogador> jogadoresList = sortOpt
                 .map(sortField -> this.jogadores.stream()
                         .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sortField)))
-                        .skip((long) pageSize * (pageNumberFix - 1))
+                        .skip(skip)
                         .limit(pageSize)
                         .toList())
                 .orElseGet(() -> this.jogadores.stream()
-                        .skip((long) pageSize * (pageNumberFix - 1))
+                        .skip(skip)
                         .limit(pageSize)
                         .toList());
 
