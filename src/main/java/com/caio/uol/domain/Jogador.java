@@ -2,10 +2,11 @@ package com.caio.uol.domain;
 
 import com.caio.uol.domain.enumeration.Time;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Jogador {
+public class Jogador implements Serializable {
     private UUID uuid;
     private String nome;
     private String email;

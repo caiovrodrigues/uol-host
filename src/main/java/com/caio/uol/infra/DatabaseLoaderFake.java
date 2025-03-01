@@ -2,11 +2,14 @@ package com.caio.uol.infra;
 
 import com.caio.uol.domain.enumeration.Time;
 import com.caio.uol.service.JogadoresService;
+import com.caio.uol.service.strategy.CustomConstants;
 import com.caio.uol.web.dto.JogadorCreateRequest;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+@Profile({CustomConstants.local})
 @Component
 public class DatabaseLoaderFake {
 
