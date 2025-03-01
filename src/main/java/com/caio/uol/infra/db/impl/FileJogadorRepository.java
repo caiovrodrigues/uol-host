@@ -27,8 +27,15 @@ public class FileJogadorRepository implements JogadorRepository {
 
     @Override
     public Jogador save(Jogador jogador) {
-        List<Jogador> playersFromFile = getPlayersFromFile();
-        playersFromFile.add(jogador);
+        List<Jogador> playersFromFile = findAll();
+
+        int indexOfJogadorInList = playersFromFile.indexOf(jogador);
+
+        if(indexOfJogadorInList != -1){
+            playersFromFile.set(indexOfJogadorInList, jogador);
+        }else{
+            playersFromFile.add(jogador);
+        }
 
         try(ObjectOutputStream objectOutputStream = getOutputStream()){
             objectOutputStream.writeObject(playersFromFile);
@@ -56,15 +63,16 @@ public class FileJogadorRepository implements JogadorRepository {
         int totalPlayers = jogadores.size();
         int totalPages = (int) Math.ceil((double) totalPlayers / pageSize);
         int pageNumberFix = Math.min(pageNumber, totalPages);
+        long skip = (long) pageSize * (Math.max(pageNumberFix - 1, 0));
 
         List<Jogador> jogadoresList = sortOpt
                 .map(sortField -> jogadores.stream()
                         .sorted(Comparator.comparing((jogador) -> extractKeyToSort(jogador, sortField)))
-                        .skip((long) pageSize * (pageNumberFix - 1))
+                        .skip(skip)
                         .limit(pageSize)
                         .toList())
                 .orElseGet(() -> jogadores.stream()
-                        .skip((long) pageSize * (pageNumberFix - 1))
+                        .skip(skip)
                         .limit(pageSize)
                         .toList());
 
@@ -73,25 +81,19 @@ public class FileJogadorRepository implements JogadorRepository {
 
     @Override
     public Optional<Jogador> findByName(String name) {
-        return Optional.empty();
+        List<Jogador> jogadores = findAll();
+        return jogadores.stream().filter(jogador -> jogador.getNome().equals(name)).findFirst();
     }
 
     @Override
     public Optional<Jogador> findByUuid(String uuid) {
-        return Optional.empty();
+        List<Jogador> jogadores = findAll();
+        return jogadores.stream().filter(jogador -> jogador.getUuid().toString().equals(uuid)).findFirst();
     }
 
     @Override
     public void deleteByJogador(Jogador jogador) {
         //do nothing
-    }
-
-    private List<Jogador> getPlayersFromFile(){
-        try(ObjectInputStream objectInputStream = getInputStream()){
-            return (List<Jogador>) objectInputStream.readObject();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private String extractKeyToSort(Jogador jogador, String sortKey){
